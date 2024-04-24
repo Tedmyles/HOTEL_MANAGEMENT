@@ -1,0 +1,63 @@
+{
+   "checksum": "f6525c2b6b116e344e2b1ddb494e7719",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13330163269620369",
+            "date_last_used": "0",
+            "guid": "53701f47-4508-4d7f-8f9d-fb1a77364a6b",
+            "id": "7",
+            "name": "Documentation for Visual Studio Code",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://code.visualstudio.com/docs/?dv=win"
+         }, {
+            "date_added": "13344375959422058",
+            "date_last_used": "0",
+            "guid": "65f262ba-30b5-4edb-ae50-b6f85d495d97",
+            "id": "8",
+            "meta_info": {
+               "power_bookmark_meta": ""
+            },
+            "name": "www.musictheory.net",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://www.musictheory.net/lessons/21"
+         } ],
+         "date_added": "13357995737519261",
+         "date_last_used": "0",
+         "date_modified": "13344375959422058",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "Favorites bar",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13357995737519264",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "Other favorites",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13357995737519266",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "Mobile favorites",
+         "source": "unknown",
+         "type": "folder"
+      }
+   },
+   "sync_metadata": "CjEKDgiIgQISCCgY4vWOAQAAEgAqGFp3cUVoaFQ0K3U4NGxSdnhaS3VUMlE9PUgDoAYMEqgBCAgSowEKHEdWWWUrSVZEVGpsc1RKWFdEdStPZ0V0cmJpZz0SJDY1ZjI2MmJhLTMwYjUtNGVkYi1hZTUwLWI2Zjg1ZDQ5NWQ5NxgAIAIoAjCksIiv7zE4sdHV6LwxQM2rh6/vMUocZXg5MWsrQjhMelR3ZUZTbmlGN05sMW12TGtnPVofIh23YkNqb2tKR3YrUk9IL2VRNXF5QXZjdy9kczd3PWX2XQvpEqcBCAcSogEKHHhPcjlvVUFDYlNGZFRVbVZxbTZpcjhmQThLVT0SJDUzNzAxZjQ3LTQ1MDgtNGQ3Zi04ZjlkLWZiMWE3NzM2NGE2YhgAIAIoAjCjsIiv7zE4mrqL7agxQMirh6/vMUocZTUrZHNrTjV1Rmc0S3ZrRmlRczgxVW5tOGRFPVoeIhxvRGIwanBXK1BVYnhBR0doblYyN3lnWG8zNGc9ZcnyZV0SiQEIARKEAQoceXhKLzZmdmtlY3I3a3A1RVF6QjR0V0xwZGJFPRIkZWRlNWJlY2EtMGFlMy01MGQ0LTk1MTctNjEyMjI4M2ZkMzI2GAAgACgAMIj8w/yIMTjp/8P8iDFA6f/D/IgxShxhUkNXTGdoRjliNUlucUtJRHZ1Si9qdlFrRmM9WgBlAAAAABKJAQgCEoQBChxZY1NUb252RVNQd3FDczRMMmNyVmh2NjhMOTg9EiRkOTFiOWRlNC0zZDM5LTUyNjgtYWMwYS0wZDI5MzllNTYyYzYYACAAKAAwifzD/IgxOIOAxPyIMUCDgMT8iDFKHG9QVmtod0JSYlY2NUtDV1IyK0lPTkhXb091OD1aAGUAAAAAEokBCAMShAEKHG5qZ0R1ODhlQ3J2WHA4NnBEN2ZIR2NxRnA4OD0SJGQwNTZmNGU5LWM3ZGEtNTdmYS04ZTMyLWExOTEyYWVkNGRlZhgAIAAoADCO/MP8iDE49oDE/IgxQPaAxPyIMUoceXpOQjAxY241NEE3Y1JVMHVUKy9QZ21UdFVvPVoAZQAAAAAwADgA",
+   "version": 1
+}
