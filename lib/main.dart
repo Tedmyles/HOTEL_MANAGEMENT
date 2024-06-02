@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_2/firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:provider/provider.dart';
-import 'package:flutter_application_2/presentation/home/home_screen.dart';
-import 'package:flutter_application_2/providers/auth_provider.dart';
-import 'package:flutter_application_2/providers/hotel_provider.dart'; // Import HotelProvider
-import 'package:flutter_application_2/presentation/authentication/screens/signup.dart';
-import 'package:flutter_application_2/presentation/authentication/screens/login.dart';
-import 'package:flutter_application_2/screens/add_hotel_screen.dart';
+
+import 'firebase_options.dart';
+import 'presentation/home/home_screen.dart';
+import 'providers/auth_provider.dart';
+import 'providers/hotel_provider.dart';
+import 'providers/admin_provider.dart'; // Import AdminProvider
+import 'presentation/authentication/screens/signup.dart';
+import 'presentation/authentication/screens/login.dart';
+import 'presentation/authentication/screens/admin_login_screen.dart'; // Import AdminLoginScreen
+import 'screens/add_hotel_screen.dart';
+import 'presentation/home/admin_screen.dart'; // Import AdminDashboard
+import 'screens/add_room.dart'; // Import AdminAddRoomScreen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +23,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => HotelProvider()), // Include HotelProvider
+        ChangeNotifierProvider<AuthProvider>(create: (context) => AuthProvider()),
+        ChangeNotifierProvider<HotelProvider>(create: (context) => HotelProvider()),
+        ChangeNotifierProvider<AdminProvider>(create: (context) => AdminProvider()), // Add AdminProvider
       ],
       child: const MyApp(),
     ),
@@ -29,18 +33,15 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // Set the initial route to '/' for the home page
       initialRoute: '/',
       routes: {
-        // Define routes for home, sign up, login screens, and AddHotelScreen
         '/': (context) {
-          // Redirect to home page if user is logged in
           return Consumer<AuthProvider>(
             builder: (context, authProvider, _) {
               return authProvider.isLoggedIn ? HotelListScreen() : const SignUpScreen();
@@ -50,7 +51,10 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HotelListScreen(),
         '/signUp': (context) => const SignUpScreen(),
         '/login': (context) => const LoginScreen(),
-        '/addHotel': (context) => AddHotelScreen(), // Add route for AddHotelScreen
+        '/addHotel': (context) => const AddHotelScreen(),
+        '/adminLogin': (context) => const AdminLoginScreen(), // Add route for AdminLoginScreen
+        '/adminDashboard': (context) => const AdminDashboard(), // Add route for AdminDashboard
+        '/adminAddRoom': (context) => AdminAddRoomScreen(), // Add route for AdminAddRoomScreen
       },
     );
   }

@@ -1,33 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/data/hotel_data.dart'; // Import hotel data
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_2/domain/models/hotel.dart';
-import 'package:flutter_application_2/screens/room_details_screen.dart'; // Import RoomDetailsScreen if it's in a separate file
+import 'package:flutter_application_2/screens/hotel_details_screen.dart';
 import 'package:flutter_application_2/presentation/authentication/screens/profile.dart';
 
-import '../../screens/add_hotel_screen.dart'; // Import the Profile screen
-
 class HotelListScreen extends StatefulWidget {
+  const HotelListScreen({Key? key}) : super(key: key);
+
   @override
   _HotelListScreenState createState() => _HotelListScreenState();
 }
 
 class _HotelListScreenState extends State<HotelListScreen> {
   int _currentIndex = 0;
+  late Future<List<Hotel>> _hotelsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _hotelsFuture = fetchHotels();
+  }
+
+  Future<List<Hotel>> fetchHotels() async {
+    QuerySnapshot hotelsSnapshot = await FirebaseFirestore.instance.collection('hotels').get();
+    return hotelsSnapshot.docs.map((doc) {
+      return Hotel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hotel List'),
+        title: const Text('Hotel List'),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             onPressed: () {
-              // Call a function to seed data here
-              // For example:
-              // setState(() {
-              //   hotels = seedHotelData();
-              // });
+              setState(() {
+                _hotelsFuture = fetchHotels();
+              });
             },
           ),
         ],
@@ -36,12 +48,12 @@ class _HotelListScreenState extends State<HotelListScreen> {
         index: _currentIndex,
         children: [
           buildHotelList(),
-          ProfilePage(),
+          const ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.hotel), // Hotel icon
             label: 'Hotels',
@@ -57,94 +69,95 @@ class _HotelListScreenState extends State<HotelListScreen> {
           });
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate to the add hotel screen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddHotelScreen(),
-            ),
-          );
-        },
-        child: Icon(Icons.add),
-      ),
     );
   }
 
   Widget buildHotelList() {
-    return GridView.builder(
-      padding: EdgeInsets.all(16.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-      ),
-      itemCount: hotels.length, // Assuming hotels list is defined before this point
-      itemBuilder: (context, index) {
-        final hotel = hotels[index];
-        return GestureDetector(
-          onTap: () {
-            // Navigate to room details screen
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RoomDetailsScreen(room: hotel.rooms[0]), // Assuming there's at least one room
-              ),
-            );
-          },
-          child: Card(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Image.network(
-                    hotel.imageUrl, // Access the imageUrl property
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
+    return FutureBuilder<List<Hotel>>(
+      future: _hotelsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Error loading hotels'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No hotels found'));
+        } else {
+          final hotels = snapshot.data!;
+          return GridView.builder(
+            padding: const EdgeInsets.all(16.0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 16.0,
+            ),
+            itemCount: hotels.length,
+            itemBuilder: (context, index) {
+              final hotel = hotels[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HotelDetailsScreen(hotel: hotel),
+                    ),
+                  );
+                },
+                child: Card(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
-                        hotel.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
+                      Expanded(
+                        child: Image.network(
+                          hotel.imageUrl,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      SizedBox(height: 4.0),
-                      Text(
-                        hotel.location,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          SizedBox(width: 4.0),
-                          Text(
-                            hotel.rating.toString(),
-                            style: TextStyle(
-                              fontSize: 14.0,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              hotel.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                              ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 4.0),
+                            Text(
+                              hotel.location,
+                              style: const TextStyle(
+                                fontSize: 14.0,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                const SizedBox(width: 4.0),
+                                Text(
+                                  hotel.rating.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        );
+              );
+            },
+          );
+        }
       },
     );
   }

@@ -232,8 +232,8 @@
       "appId": "a3f5b7c9d1e2f4a6b8c7d9e1f2a3b4d7",
       "appName": "darkmode",
       "data": {
-         "androidBlocklist": [ "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(www\\.msn\\.)(.*\\/news\\/other.*)$", "^https?:\\/\\/edge\\.microsoft\\.com\\/edgeedrop\\/continuity\\/index\\.html(?:\\?.*)?$" ],
-         "iOSBlocklist": [ "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(www\\.msn\\.)(.*\\/news\\/other.*)$", "^https?:\\/\\/edge\\.microsoft\\.com\\/edgeedrop\\/continuity\\/index\\.html(?:\\?.*)?$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(reddit\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(amazon\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(copilot\\.microsoft\\.com)(\\/?.*?)$", "msn.com", "reddit.com", "amazon.com", "m.youtube.com", "copilot.microsoft.com" ]
+         "androidBlocklist": [ "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(www\\.msn\\.)(.*\\/news\\/other.*)$", "^https?:\\/\\/edge\\.microsoft\\.com\\/edgeedrop\\/continuity\\/index\\.html(?:\\?.*)?$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(sponsor\\.microsoft\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(wio\\.scania\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?([^/]*\\.)?(ixigua\\.com)(\\/?.*?)$" ],
+         "iOSBlocklist": [ "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(www\\.msn\\.)(.*\\/news\\/other.*)$", "^https?:\\/\\/edge\\.microsoft\\.com\\/edgeedrop\\/continuity\\/index\\.html(?:\\?.*)?$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(reddit\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(amazon\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(copilot\\.microsoft\\.com)(\\/?.*?)$", "msn.com", "reddit.com", "amazon.com", "m.youtube.com", "copilot.microsoft.com", "build.microsoft.com", "sponsor.microsoft.com" ]
       },
       "effectStrategy": "launch",
       "instanceId": "3e7a9c4b1f8d6e5c2a9b7e4d1c8f3e7a",
@@ -259,6 +259,16 @@
             },
             "title": "Sample Title"
          },
+         "operation_remote_scfre_config": {
+            "is_full_screen": false,
+            "max_version": 128,
+            "min_version": 122,
+            "operation_id": 1,
+            "remote_scfre_page": "edgeRemoteScfreDemo",
+            "target_user_profile": {
+               "operation_debug_user": true
+            }
+         },
          "operation_upsell_config": {
             "is_full_screen": false,
             "max_datetime_str": "31 Mar 2024 13:00 GMT",
@@ -277,7 +287,7 @@
       "effectStrategy": "launch",
       "instanceId": "35cafee49b9741a5ae5b2f7799ecc815",
       "type": "normal",
-      "version": "1011"
+      "version": "1013"
    } ],
-   "version": "202404190001"
+   "version": "202405280001"
 }

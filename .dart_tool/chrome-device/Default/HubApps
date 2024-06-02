@@ -114,9 +114,9 @@
       "description": "Contextually relevant info for any page",
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_copilot_blue.png/1.3.12/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_copilot_hc.png/1.3.12/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_copilot_blue.png/1.3.12/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_copilot_blue.png/1.3.13/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_copilot_hc.png/1.3.13/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_copilot_blue.png/1.3.13/asset"
          }
       },
       "id": "cd4688a9-e888-48ea-ad81-76193d56b1be",
@@ -184,10 +184,11 @@
          } ]
       },
       "on_by_default": true,
+      "tags": [ "no_auto_cleanup" ],
       "target": {
          "command": "discover_chat"
       },
-      "version": "1.3.12"
+      "version": "1.3.13"
    }, {
       "auto_show": {
          "enabled": true,
@@ -306,9 +307,9 @@
       "description": "Search without losing your place",
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_dark.png/1.3.17/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_hc.png/1.3.17/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_light.png/1.3.17/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_dark.png/1.3.18/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_hc.png/1.3.18/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_search_maximal_light.png/1.3.18/asset"
          }
       },
       "id": "8ac719c5-140b-4bf2-a0b7-c71617f1f377",
@@ -324,10 +325,11 @@
          "enabled": true
       },
       "on_by_default": true,
+      "tags": [ "no_auto_cleanup" ],
       "target": {
          "command": "search"
       },
-      "version": "1.3.17"
+      "version": "1.3.18"
    }, {
       "capabilities": {
          "deprecated_hide_header": true
@@ -924,9 +926,9 @@
       "description": "Check email while staying in your flow",
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_outlook_dark.png/1.12.10/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_outlook_hc.png/1.12.10/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_outlook_light.png/1.12.10/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_outlook_dark.png/1.12.11/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_outlook_hc.png/1.12.11/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_outlook_light.png/1.12.11/asset"
          }
       },
       "id": "8682d0fa-50b3-4ece-aa5b-e0b33f9919e2",
@@ -937,25 +939,6 @@
       "manifest_version": 3,
       "microfeedback": {
          "area_path": "Features\\Sidebar\\Outlook",
-         "dislike": {
-            "description_override": "How can we improve Outlook in the sidebar?",
-            "options": [ "I don't like that the side pane opens automatically", "It takes up too much space on my screen", "Outlook was not signed in with the correct profile", "The wrong email was opened", "Seeing the email on the side was not helpful to me", "The side pane was slow to open", "Other" ],
-            "other_option_support": true,
-            "prompt": "Tell us why you are not satisfied"
-         },
-         "like": {
-            "description_override": "Tell us what you like about Outlook in the sidebar",
-            "options": [ "I like that my email opens side-by-side with the web link", "I like that I can keep tabs on my inbox and calendar without switching between tabs", "I like that Microsoft 365 web apps are just a click away", "Other" ],
-            "other_option_support": true,
-            "prompt": "Tell us what you like"
-         },
-         "locations": {
-            "auto_open_settings_page": {
-               "item_id": 0,
-               "item_name": "Auto-open settings page",
-               "prompt": "Are you satisfied with Outlook in the sidebar?"
-            }
-         },
          "service_id": "39f2d170-852b-4e8b-aa58-04e34218acef"
       },
       "name": "Outlook",
@@ -971,7 +954,7 @@
       },
       "trusted_domains": [ "live.com", "office.com", "microsoftonline.com", "microsoft.com", "office365.com" ],
       "trusted_types": [ "default", "dompurify" ],
-      "version": "1.12.10"
+      "version": "1.12.11"
    }, {
       "capabilities|flight:msDesignerSinglePrompt": {
          "enable_force_dark_mode": true
@@ -983,9 +966,9 @@
       "disabled|device:managed": true,
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_image_creator_from_designer.png/1.0.23/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_image_creator_from_designer_hc.png/1.0.23/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_image_creator_from_designer.png/1.0.23/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_image_creator_from_designer.png/1.0.24/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_image_creator_from_designer_hc.png/1.0.24/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_image_creator_from_designer.png/1.0.24/asset"
          }
       },
       "id": "2caf0cf4-ea42-4083-b928-29b39da1182b",
@@ -1014,7 +997,7 @@
          "url|flight:msDesignerSinglePrompt": "edge://designer/",
          "url|theme:dark": "https://www.bing.com/images/create?FORM=ESHBIC&edgehub=1&darkschemeovr=1&partner=edgehub"
       },
-      "version": "1.0.23"
+      "version": "1.0.24"
    }, {
       "capabilities": {
          "deprecated_hide_header": false
@@ -1159,9 +1142,9 @@
       "disabled|device:managed": false,
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_designer_color.png/1.0.21/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_designer_hc.png/1.0.21/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_designer_color.png/1.0.21/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_designer_color.png/1.0.22/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_designer_hc.png/1.0.22/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_designer_color.png/1.0.22/asset"
          }
       },
       "id": "2cb2db96-3bd0-403e-abe2-9269b3761041",
@@ -1182,7 +1165,7 @@
       "target": {
          "url": "edge://designer/"
       },
-      "version": "1.0.21"
+      "version": "1.0.22"
    }, {
       "capabilities": {
          "show_domain_in_header": true
@@ -1694,9 +1677,9 @@
       },
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_dark.png/1.5.7/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_hc.png/1.5.7/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_light.png/1.5.7/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_dark.png/1.5.8/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_hc.png/1.5.8/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_light.png/1.5.8/asset"
          }
       },
       "id": "bc25fcef-8964-4e72-8287-23e2b496c128",
@@ -1706,25 +1689,6 @@
       "manifest_version": 3,
       "microfeedback": {
          "area_path": "Features\\Sidebar\\Teams",
-         "dislike": {
-            "description_override": "How can we improve Teams in the sidebar?",
-            "options": [ "I don't like that the side pane opens automatically", "It takes up too much space on my screen", "Teams was not signed in with the correct browser", "The wrong chat was opened", "Seeing the chat on the side was not helpful to me", "The side pane was slow to open", "Other" ],
-            "other_option_support": true,
-            "prompt": "Tell us why you are not satisfied"
-         },
-         "like": {
-            "description_override": "Tell us what you like about Teams in the sidebar",
-            "options": [ "I like that my chat opens side-by-side with the web link", "I like that I can keep tabs on my chat without switching tabs", "I like that Microsoft 365 web apps are just a click away", "Other" ],
-            "other_option_support": true,
-            "prompt": "Tell us what you like"
-         },
-         "locations": {
-            "auto_open_settings_page": {
-               "item_id": 0,
-               "item_name": "teams hub app setting page",
-               "prompt": "Are you satisfied with Teams in the sidebar?"
-            }
-         },
          "service_id": "ef98a99f-f053-44be-939d-5875c41c09b3"
       },
       "name": "Teams",
@@ -1735,7 +1699,7 @@
       "target": {
          "url": "https://teams.microsoft.com/embed-client/chats/list?layout=singlePane&hostCtx=edge"
       },
-      "version": "1.5.7"
+      "version": "1.5.8"
    }, {
       "capabilities": {
          "show_domain_in_header": true
@@ -2177,6 +2141,7 @@
          "force_auto_open": false,
          "id": "c8ebbf64-e3b8-41d9-925f-4e3754151ff7",
          "lifetime": "tab",
+         "lifetime|flight:msHubAppMsStartPerWindowAutoOpen": "window",
          "min_page_width_pixels": 1052,
          "non_visible_user_friendly_name": "MS Start Protocol Launch",
          "remember_context": {
@@ -2199,6 +2164,8 @@
          "force_auto_open": false,
          "id": "75a774c2-6075-ae4f-09f9-e5f5d9bef6e1",
          "lifetime": "tab",
+         "lifetime|flight:msHubAppMsStartPerWindowAutoOpen": "window",
+         "min_page_width_pixels": 1052,
          "non_visible_user_friendly_name": "Yahoo Naver Top Site",
          "remember_context": {
             "time_to_live_sec": 86400
@@ -2245,6 +2212,8 @@
          "force_auto_open": false,
          "id": "a5e9f5e1-fcee-c07b-2c44-b707ded020a3",
          "lifetime": "tab",
+         "lifetime|flight:msHubAppMsStartPerWindowAutoOpen": "window",
+         "min_page_width_pixels": 1052,
          "non_visible_user_friendly_name": "Yahoo Japan Weather Top site",
          "remember_context": {
             "time_to_live_sec": 86400
@@ -2270,6 +2239,7 @@
             "text": "We opened the news feed in this sidebar so you can continue browsing."
          },
          "lifetime": "tab",
+         "lifetime|flight:msHubAppMsStartPerWindowAutoOpen": "window",
          "remember_context": {
             "time_to_live_sec": 86400
          },
@@ -2285,8 +2255,8 @@
       "flights": [ "msEdgeHubAppStart", "msEdgeTransientAppAutoOpen" ],
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_dark.png/1.2.11/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_light.png/1.2.11/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_dark.png/1.2.13/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_msstart_logo_light.png/1.2.13/asset"
          }
       },
       "id": "b7a8e9f2-6b0d-4c5b-ae7d-8a6e1f2c7a6f",
@@ -2300,9 +2270,9 @@
       "pin_by_default": true,
       "target": {
          "url": "https://www.msn.com/widgets/fullpage/winWidgets/sidebar?experiences=WindowsWidgetsHub",
-         "url|locale:zh_CN": "https://www.msn.cn/widgets/fullpage/winWidgets/sidebar?experiences=WindowsWidgetsHub"
+         "url|market:CN": "https://www.msn.cn/widgets/fullpage/winWidgets/sidebar?experiences=WindowsWidgetsHub"
       },
-      "version": "1.2.11"
+      "version": "1.2.13"
    }, {
       "capabilities": {
          "hide_navigation_buttons": true
@@ -2349,6 +2319,49 @@
          }
       },
       "version": "0.0.5"
+   }, {
+      "default_locale": "en",
+      "description": "Your online travel companion",
+      "disabled": false,
+      "flights": [ "msEdgeTravelSidebarEnabled" ],
+      "icon": {
+         "raster_icon": {
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_mstravel_logo_dark.png/1.0.0/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_mstravel_logo_hc.png/1.0.0/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_mstravel_logo_light.png/1.0.0/asset"
+         }
+      },
+      "id": "fa71aaef-6e75-4e2a-aada-635e8c5899f5",
+      "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp8hXSTZHUd29mI/mKoZFj48uGDToHrVg5hRB2nHZZn9U7m8IdewA5Cnpe8Jps3pm1D/3Uy9VYFeYwpUczUaQKofG6KnnZQpjcCkLxzmsuVU5dSSkHacL7KY4qRehweM+MbtmQEu/WBnwEA5qY2Bv4fVR3D4RhOyMpyNOmtAydFi6OgGxjzm0wJ1GyNVmI/jibwUuTCBhVNmdOOZpDnqTQ0HVdDhH4hrTMPUH7ZOjoj+cuOpWQfIYankinfuRrK4g8R4iXb672Irgrc/H3SfqwZ1K9/4/cA8mLfJ+Kt2hCUj3Ptu18kUBcVQ2zH1Df8kYOvYKslbGtPH4h2o5FLMWLwIDAQAB",
+      "lifetime": "background",
+      "locales": [ "en" ],
+      "manifest_version": 3,
+      "microfeedback": {
+         "area_path": "Features\\Sidebar\\Travel",
+         "service_id": "e90c3ebe-36d8-4d05-9689-564773d48f49"
+      },
+      "name": "Microsoft Travel",
+      "notifications|flight:msEdgeTravelSidebarNotif": {
+         "enabled": true,
+         "triggers": [ {
+            "config": {
+               "max_show_count": 3,
+               "min_sec_between_auto_show": 3600,
+               "show_count_basis": "signal",
+               "signal_name": "IsTravelSidebarDomain",
+               "signal_threshold": 0.5
+            },
+            "text": "Plan your trip",
+            "type": "triggering_config"
+         } ]
+      },
+      "pin_by_default": false,
+      "pin_by_default|flight:msEdgeTravelSidebarPinned": true,
+      "preferred_side_pane_width": 376,
+      "target": {
+         "url": "https://www.bing.com/travelgrowthedge/sidebar.html"
+      },
+      "version": "1.0.0"
    } ],
    "manifest_version": "4.0.0"
 }

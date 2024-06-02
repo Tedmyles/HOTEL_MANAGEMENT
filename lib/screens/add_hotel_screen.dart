@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_2/domain/models/hotel.dart';
 import 'package:flutter_application_2/providers/hotel_provider.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,6 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
   final locationController = TextEditingController();
   final imageUrlController = TextEditingController();
   double rating = 0.0;
-  List<Room> rooms = [];
 
   @override
   void dispose() {
@@ -30,16 +30,16 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Hotel'),
+        title: const Text('Add Hotel'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
                 controller: nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -48,9 +48,9 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Location'),
+                decoration: const InputDecoration(labelText: 'Location'),
                 controller: locationController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -59,7 +59,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Slider(
                 value: rating,
                 min: 0.0,
@@ -72,9 +72,9 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   });
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Image URL'),
+                decoration: const InputDecoration(labelText: 'Image URL'),
                 controller: imageUrlController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -83,23 +83,32 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    // Generate a new document ID for the hotel
+                    final hotelCollection = FirebaseFirestore.instance.collection('hotels');
+                    final newHotelDoc = hotelCollection.doc();
+
                     Hotel hotel = Hotel(
+                      id: newHotelDoc.id,
                       name: nameController.text,
                       location: locationController.text,
                       imageUrl: imageUrlController.text,
                       rating: rating,
-                      rooms: rooms,
                     );
-                    Provider.of<HotelProvider>(context, listen: false)
-                        .addHotel(hotel);
+
+                    // Add the new hotel to Firestore
+                    await newHotelDoc.set(hotel.toJson());
+
+                    // Notify provider
+                    Provider.of<HotelProvider>(context, listen: false).addHotel(hotel);
+
                     Navigator.pop(context);
                   }
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),

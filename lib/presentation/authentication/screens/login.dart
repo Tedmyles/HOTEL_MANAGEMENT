@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/presentation/authentication/widgets/logo.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_2/providers/auth_provider.dart';
-import 'package:flutter_application_2/presentation/home/home_screen.dart'; // Import the profile screen
+import 'package:flutter_application_2/presentation/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text('Login'),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/bg2.jpg'),
             fit: BoxFit.cover,
@@ -42,45 +42,45 @@ class _LoginScreenState extends State<LoginScreen> {
               const LogoWidget(),
               TextFormField(
                 controller: _emailController,
-                style: TextStyle(color: Colors.white), // Set text color to white
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.white), // Set label color to white
-                  prefixIcon: Icon(Icons.email, color: Colors.white), // Email icon with white color
+                  labelStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.email, color: Colors.white),
                 ),
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
-                style: TextStyle(color: Colors.white), // Set text color to white
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white), // Set label color to white
-                  prefixIcon: Icon(Icons.lock, color: Colors.white), // Password icon with white color
+                  labelStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.lock, color: Colors.white),
                 ),
                 obscureText: true,
               ),
-              SizedBox(
-                height: 20, // Adjust the height according to your preference
-              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   String email = _emailController.text.trim();
                   String password = _passwordController.text.trim();
-                  // Pass the current context to the AuthProvider
-                  await context
-                      .read<AuthProvider>()
-                      .signInWithEmailAndPassword(context, email, password);
-                  // Check if the user is created successfully
+                  await context.read<AuthProvider>().signInWithEmailAndPassword(context, email, password);
                   if (context.read<AuthProvider>().user != null) {
-                    // Navigate to the profile screen after successful login
-                    Navigator.pushNamed(context, '/profile');
+                    Navigator.pushReplacementNamed(context, '/home');
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 33, 243, 37), // Change the button color here
+                  backgroundColor: const Color.fromARGB(255, 33, 243, 37),
                 ),
                 child: const Text('Login'),
+              ),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/adminLogin');
+                },
+                child: const Text('Login as Admin', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
