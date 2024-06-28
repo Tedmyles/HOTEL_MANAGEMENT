@@ -207,13 +207,13 @@
       "appName": "topsites",
       "data": {
          "latestOperationVersion": "2.0",
-         "latestOperationVersionForTesting": "2.0",
+         "latestOperationVersionForTesting": "2.1",
          "topSitesV2Enabled": false
       },
       "effectStrategy": "launch",
       "instanceId": "3e7a9c4b1f8d6e5c2a9b7e4d1c8f3e7b",
       "type": "normal",
-      "version": "1004"
+      "version": "1005"
    }, {
       "appId": "71146be72c1663fbeca572989b494b56",
       "appName": "shared_links",
@@ -259,16 +259,6 @@
             },
             "title": "Sample Title"
          },
-         "operation_remote_scfre_config": {
-            "is_full_screen": false,
-            "max_version": 128,
-            "min_version": 122,
-            "operation_id": 1,
-            "remote_scfre_page": "edgeRemoteScfreDemo",
-            "target_user_profile": {
-               "operation_debug_user": true
-            }
-         },
          "operation_upsell_config": {
             "is_full_screen": false,
             "max_datetime_str": "31 Mar 2024 13:00 GMT",
@@ -288,6 +278,27 @@
       "instanceId": "35cafee49b9741a5ae5b2f7799ecc815",
       "type": "normal",
       "version": "1013"
+   }, {
+      "appId": "3779f16f2b7145cd8baa5253579828b3",
+      "appName": "growth_engine",
+      "data": {
+         "remote_upsell_config": {
+            "upsell_list": [ {
+               "id": 1,
+               "is_full_screen": true,
+               "max_version": 128,
+               "min_version": 122,
+               "remote_upsell_page": "edgeRemoteUpsellDemo",
+               "target_user_profile": {
+                  "growth_engine_debug_user": true
+               }
+            } ]
+         }
+      },
+      "effectStrategy": "launch",
+      "instanceId": "4a69a034b30744209270b9f63a1edeeb",
+      "type": "normal",
+      "version": "1003"
    } ],
-   "version": "202405280001"
+   "version": "202406110001"
 }

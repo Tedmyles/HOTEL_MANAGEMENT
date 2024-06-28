@@ -1075,13 +1075,14 @@
       "default_locale": "en",
       "description": "Plant trees to protect our earth together",
       "disabled|auth:aad": true,
+      "disabled|device:xbox": true,
       "disabled|locale:af:am:as:bs:fil:ga:gd:gu:hy:kk:km:kn:kok:lb:lo:mi:ml:ms:mt:or:pa:quz:ta:tt:ug:uz": true,
       "flights": [  ],
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_etree_maximal_dark.png/1.2.1/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_etree_hc.png/1.2.1/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_etree_maximal_light.png/1.2.1/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_etree_maximal_dark.png/1.2.2/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_etree_hc.png/1.2.2/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_etree_maximal_light.png/1.2.2/asset"
          }
       },
       "id": "9ce3c9c2-462f-4cc9-bbd7-57d656445be0",
@@ -1102,7 +1103,7 @@
       "target": {
          "url": "edge://etree/?sharedHeader=1"
       },
-      "version": "1.2.1"
+      "version": "1.2.2"
    }, {
       "capabilities": {
          "show_domain_in_header": true
@@ -1648,7 +1649,8 @@
             "description": "When a web link is opened from a Teams chat, the side pane will show that chat for context.",
             "learn_more_link": "https://go.microsoft.com/fwlink/?linkid=2213996",
             "title": "Automatically open Teams chat context in the side pane"
-         }
+         },
+         "supported_platforms": [ "win", "mac" ]
       } ],
       "auto_show": {
          "enabled": true,
@@ -1690,9 +1692,9 @@
       },
       "icon": {
          "raster_icon": {
-            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_dark.png/1.5.9/asset",
-            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_hc.png/1.5.9/asset",
-            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_light.png/1.5.9/asset"
+            "dark_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_dark.png/1.5.10/asset",
+            "high_contrast": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_hc.png/1.5.10/asset",
+            "light_mode": "https://edgeassetservice.azureedge.net/assets/edge_hub_apps_teams_light.png/1.5.10/asset"
          }
       },
       "id": "bc25fcef-8964-4e72-8287-23e2b496c128",
@@ -1712,7 +1714,7 @@
       "target": {
          "url": "https://teams.microsoft.com/embed-client/chats/list?layout=singlePane&hostCtx=edge"
       },
-      "version": "1.5.9"
+      "version": "1.5.10"
    }, {
       "capabilities": {
          "show_domain_in_header": true

@@ -31,28 +31,43 @@ class HotelDetailsScreen extends StatelessWidget {
           } else {
             final roomDocs = snapshot.data!.docs;
 
-            return ListView.builder(
-              itemCount: roomDocs.length,
-              itemBuilder: (context, index) {
-                final roomData = roomDocs[index].data() as Map<String, dynamic>;
-                final room = Room.fromMap(roomData, roomDocs[index].id);
+            return ListView(
+              children: roomDocs.map((roomDoc) {
+                final roomData = roomDoc.data() as Map<String, dynamic>;
+                final room = Room.fromMap(roomData, roomDoc.id);
 
-                return ListTile(
-                  title: Text(room.type),
-                  subtitle: Text('Price: Ksh${room.price.toStringAsFixed(2)}'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RoomDetailsScreen(
-                          hotelId: hotel.id,
-                          roomId: room.id,
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    child: Column(
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 16 / 9, // Adjust aspect ratio as needed
+                          child: Image.network(
+                            room.imageUrl,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                        ListTile(
+                          title: Text(room.type),
+                          subtitle: Text('Price: Ksh${room.price.toStringAsFixed(2)}'),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RoomDetailsScreen(
+                                  hotelId: hotel.id,
+                                  roomId: room.id,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 );
-              },
+              }).toList(),
             );
           }
         },

@@ -30,9 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: 2.28.0
+  firebase_core: ^2.32.0
   firebase_auth: ^4.5.0
   provider: ^6.1.2
+  crypto: ^3.0.0 
+  flutter_launcher_icons: ^0.9.2
   awesome_dialog:
  
 
@@ -43,6 +45,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   firebase_ui_firestore: ^1.6.2
   cloud_firestore: ^4.16.0
+  firebase_storage: ^11.7.7
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +57,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -80,6 +84,8 @@ flutter:
     - assets/images/htl3.jpg
     - assets/images/htl4.jpg
     - assets/images/htl5.jpg
+    - assets/default_profile_image.png
+    - assets/icons/launch_image.png
   uses-material-design: true
 
 

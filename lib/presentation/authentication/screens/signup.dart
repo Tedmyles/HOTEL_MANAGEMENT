@@ -25,7 +25,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Remove the back arrow
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
