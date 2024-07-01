@@ -6,11 +6,11 @@ class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
   UserModel? _user;
   String? _errorMessage;
-  bool _isLoggedIn = false; // Add a boolean variable to track login status
+  bool _isLoggedIn = false;
 
   UserModel? get user => _user;
   String? get errorMessage => _errorMessage;
-  bool get isLoggedIn => _isLoggedIn; // Expose the login status
+  bool get isLoggedIn => _isLoggedIn;
 
   Future<void> createUserWithEmailAndPassword(
       BuildContext context, String email, String password) async {
@@ -19,11 +19,11 @@ class AuthProvider extends ChangeNotifier {
     if (createdUser != null) {
       _user = createdUser;
       _errorMessage = null;
-      _isLoggedIn = true; // Set isLoggedIn to true after successful sign up
+      _isLoggedIn = true;
       notifyListeners();
     } else {
       _errorMessage = "An error occurred while creating the user.";
-      _isLoggedIn = false; // Set isLoggedIn to false in case of error
+      _isLoggedIn = false;
       notifyListeners();
     }
   }
@@ -35,12 +35,22 @@ class AuthProvider extends ChangeNotifier {
     if (signedInUser != null) {
       _user = signedInUser;
       _errorMessage = null;
-      _isLoggedIn = true; // Set isLoggedIn to true after successful sign in
+      _isLoggedIn = true;
       notifyListeners();
     } else {
-      _errorMessage = "Email or password is incorrect."; // Update error message
-      _isLoggedIn = false; // Set isLoggedIn to false in case of error
+      _errorMessage = "Email or password is incorrect.";
+      _isLoggedIn = false;
       notifyListeners();
     }
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _authService.sendPasswordResetEmail(email);
+      _errorMessage = null;
+    } catch (e) {
+      _errorMessage = "An error occurred while sending the reset email.";
+    }
+    notifyListeners();
   }
 }

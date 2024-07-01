@@ -1,112 +1,121 @@
-import 'package:flutter/material.dart'; // Import Flutter material library
-import 'package:flutter_application_2/presentation/authentication/screens/admin_profile.dart'; // Import admin profile screen
-import 'package:flutter_application_2/presentation/authentication/screens/users_list_page.dart'; // Import users list page
+import 'package:flutter/material.dart';
+import 'package:flutter_application_2/presentation/authentication/screens/admin_profile.dart';
+import 'package:flutter_application_2/presentation/authentication/screens/users_list_page.dart';
+import '../../screens/add_hotel_screen.dart';
+import '../../screens/add_room.dart';
+import '../../screens/view_hotel.dart';
+import '../../screens/admin_view_bookings.dart'; 
 
-import '../../screens/add_hotel_screen.dart'; // Import add hotel screen from relative path
-import '../../screens/add_room.dart'; // Import add room screen from relative path
-import '../../screens/view_hotel.dart'; // Import view hotels screen from relative path
-
-// AdminDashboard class, extends StatefulWidget because it manages state
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
 
   @override
-  _AdminDashboardState createState() => _AdminDashboardState(); // Create state for AdminDashboard
+  _AdminDashboardState createState() => _AdminDashboardState();
 }
 
-// State class for AdminDashboard
 class _AdminDashboardState extends State<AdminDashboard> {
-  int _currentIndex = 0; // Index to track current tab in bottom navigation
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( // Scaffold widget defines basic material design visual layout structure
-      appBar: AppBar( // AppBar widget for top app bar
-        title: const Text('Admin Dashboard'), // Title text
-        backgroundColor: Color.fromARGB(255, 40, 177, 127), // Custom background color
-        automaticallyImplyLeading: false, // Disable back button on app bar
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Admin Dashboard'),
+        backgroundColor: Color.fromARGB(255, 40, 177, 127),
+        automaticallyImplyLeading: false,
       ),
-      body: IndexedStack( // IndexedStack widget to manage multiple children with an index
-        index: _currentIndex, // Index of currently displayed child
+      body: IndexedStack(
+        index: _currentIndex,
         children: [
-          buildAdminOptions(), // Method to build admin options list
-          AdminProfilePage(), // Admin profile page/tab
-          UsersListPage(), // Users list page/tab
+          buildAdminOptions(),
+          AdminProfilePage(),
+          UsersListPage(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar( // BottomNavigationBar widget for navigation tabs
-        currentIndex: _currentIndex, // Current index for selected tab
-        backgroundColor: Colors.green[900], // Background color for bottom navigation bar
-        selectedItemColor: Colors.white, // Selected item color
-        unselectedItemColor: Colors.grey[400], // Unselected item color
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        backgroundColor: Colors.green[900],
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey[400],
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.hotel), // Hotel icon
+            icon: Icon(Icons.hotel),
             label: 'Hotels',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person), // Profile icon
+            icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
-        onTap: (index) { // Callback when tab is tapped
+        onTap: (index) {
           setState(() {
-            _currentIndex = index; // Update current index
+            _currentIndex = index;
           });
         },
       ),
     );
   }
 
-  // Method to build admin options list using ListView
   Widget buildAdminOptions() {
-    return ListView( // ListView widget to display a scrollable list of options
-      padding: const EdgeInsets.all(16.0), // Padding around list items
+    return ListView(
+      padding: const EdgeInsets.all(16.0),
       children: [
-        ListTile( // ListTile widget for each option
-          leading: Icon(Icons.add_business), // Leading icon for "Add Hotel" option
-          title: Text('Add Hotel'), // Title text for "Add Hotel" option
-          onTap: () { // Callback when "Add Hotel" option is tapped
+        ListTile(
+          leading: Icon(Icons.add_business),
+          title: Text('Add Hotel'),
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AddHotelScreen(), // Navigate to AddHotelScreen
+                builder: (context) => const AddHotelScreen(),
               ),
             );
           },
         ),
-        ListTile( // ListTile widget for "Add Room" option
-          leading: Icon(Icons.add), // Leading icon for "Add Room" option
-          title: Text('Add Room'), // Title text for "Add Room" option
-          onTap: () { // Callback when "Add Room" option is tapped
+        ListTile(
+          leading: Icon(Icons.add),
+          title: Text('Add Room'),
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AdminAddRoomScreen(), // Navigate to AdminAddRoomScreen
+                builder: (context) => AdminAddRoomScreen(),
               ),
             );
           },
         ),
-        ListTile( // ListTile widget for "View Hotels" option
-          leading: Icon(Icons.hotel), // Leading icon for "View Hotels" option
-          title: Text('View Hotels'), // Title text for "View Hotels" option
-          onTap: () { // Callback when "View Hotels" option is tapped
+        ListTile(
+          leading: Icon(Icons.hotel),
+          title: Text('View Hotels'),
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ViewHotelsScreen(), // Navigate to ViewHotelsScreen
+                builder: (context) => const ViewHotelsScreen(),
               ),
             );
           },
         ),
-        ListTile( // ListTile widget for "View Users" option
-          leading: Icon(Icons.person), // Leading icon for "View Users" option
-          title: Text('View Users'), // Title text for "View Users" option
-          onTap: () { // Callback when "View Users" option is tapped
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text('View Users'),
+          onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UsersListPage(), // Navigate to UsersListPage
+                builder: (context) => UsersListPage(),
+              ),
+            );
+          },
+        ),
+        ListTile( // New list tile for View Bookings
+          leading: Icon(Icons.book), // Icon for View Bookings
+          title: Text('View Bookings'), // Title text for View Bookings
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ViewBookingsPage(), // Navigate to ViewBookingsPage
               ),
             );
           },

@@ -1,93 +1,125 @@
-import 'package:flutter/material.dart'; // Import the Flutter Material package.
-import 'package:flutter_application_2/presentation/authentication/widgets/logo.dart'; // Import the custom logo widget.
-import 'package:flutter_application_2/providers/auth_provider.dart'; // Import the authentication provider for state management.
-import 'package:provider/provider.dart'; // Import the Provider package for state management.
-import 'package:flutter_application_2/presentation/home/home_screen.dart'; // Import the home screen.
+import 'package:flutter/material.dart';
+import 'package:flutter_application_2/presentation/authentication/widgets/logo.dart';
+import 'package:flutter_application_2/providers/auth_provider.dart' as custom;
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController(); // Controller for the email input field.
-  final _passwordController = TextEditingController(); // Controller for the password input field.
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
   void dispose() {
-    _emailController.dispose(); // Dispose the email controller when the widget is disposed.
-    _passwordController.dispose(); // Dispose the password controller when the widget is disposed.
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password reset email sent.')),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('No user found for that email.')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred. Please try again.')),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Remove the back arrow in the app bar.
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/bg2.jpg'), // Set the background image.
-            fit: BoxFit.cover, // Cover the entire background with the image.
+            image: AssetImage('assets/images/bg2.jpg'),
+            fit: BoxFit.cover,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0), // Add padding around the body content.
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const LogoWidget(), // Add the custom logo widget.
+              const LogoWidget(),
               TextFormField(
-                controller: _emailController, // Attach the email controller to the input field.
-                style: const TextStyle(color: Colors.white), // Set the input text color.
+                controller: _emailController,
+                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
-                  labelText: 'Email', // Set the label text.
-                  labelStyle: TextStyle(color: Colors.white), // Set the label text color.
-                  prefixIcon: Icon(Icons.email, color: Colors.white), // Add an email icon prefix.
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.email, color: Colors.white),
                 ),
               ),
-              const SizedBox(height: 16), // Add vertical space between the fields.
+              const SizedBox(height: 16),
               TextFormField(
-                controller: _passwordController, // Attach the password controller to the input field.
-                style: const TextStyle(color: Colors.white), // Set the input text color.
+                controller: _passwordController,
+                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
-                  labelText: 'Password', // Set the label text.
-                  labelStyle: TextStyle(color: Colors.white), // Set the label text color.
-                  prefixIcon: Icon(Icons.lock, color: Colors.white), // Add a lock icon prefix.
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.white),
+                  prefixIcon: Icon(Icons.lock, color: Colors.white),
                 ),
-                obscureText: true, // Hide the input text for password fields.
+                obscureText: true,
               ),
-              const SizedBox(height: 20), // Add vertical space before the button.
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
-                  String email = _emailController.text.trim(); // Get and trim the email input.
-                  String password = _passwordController.text.trim(); // Get and trim the password input.
-                  await context.read<AuthProvider>().signInWithEmailAndPassword(context, email, password); // Call the sign-in method from the provider.
-                  if (context.read<AuthProvider>().user != null) { // Check if the user is successfully signed in.
-                    Navigator.pushReplacementNamed(context, '/home'); // Navigate to the home screen and replace the current screen.
+                  String email = _emailController.text.trim();
+                  String password = _passwordController.text.trim();
+                  await context.read<custom.AuthProvider>().signInWithEmailAndPassword(context, email, password);
+                  if (context.read<custom.AuthProvider>().user != null) {
+                    Navigator.pushReplacementNamed(context, '/home');
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 33, 243, 37), // Set the button background color.
+                  backgroundColor: const Color.fromARGB(255, 33, 243, 37),
                 ),
-                child: const Text('Login'), // Set the button text.
+                child: const Text('Login'),
               ),
-              const SizedBox(height: 20), // Add vertical space before the admin login button.
+              const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/adminLogin'); // Navigate to the admin login screen.
+                  Navigator.pushNamed(context, '/adminLogin');
                 },
-                child: const Text('Login as Admin', style: TextStyle(color: Colors.white)), // Set the admin login button text and color.
+                child: const Text('Login as Admin', style: TextStyle(color: Colors.white)),
               ),
-              // Add a text button to navigate to the signup screen.
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signUp'); // Navigate to the signup screen.
+                  Navigator.pushNamed(context, '/signUp');
                 },
-                child: const Text("Don't have an account? Signup"), // Set the signup button text.
+                child: const Text("Don't have an account? Signup", style: TextStyle(color: Colors.white)),
+              ),
+              TextButton(
+                onPressed: () async {
+                  String email = _emailController.text.trim();
+                  if (email.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Please enter your email address.')),
+                    );
+                  } else {
+                    await _sendPasswordResetEmail(email);
+                  }
+                },
+                child: const Text('Forgot Password?', style: TextStyle(color: Colors.purple)),
               ),
             ],
           ),

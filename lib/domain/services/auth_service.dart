@@ -77,4 +77,13 @@ class AuthService {
       return null;
     }
   }
+
+  // Send password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      rethrow; // Throw the error back to the caller for handling
+    }
+  }
 }

@@ -4,7 +4,7 @@ import 'package:flutter_application_2/providers/admin_provider.dart';
 
 // Define a stateful widget for the Admin Login Screen.
 class AdminLoginScreen extends StatefulWidget {
-  const AdminLoginScreen({Key? key}) : super(key: key);
+  const AdminLoginScreen({super.key});
 
   @override
   State<AdminLoginScreen> createState() => _AdminLoginScreenState();

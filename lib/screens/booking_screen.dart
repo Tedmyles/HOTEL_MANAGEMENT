@@ -219,98 +219,144 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  // Function to start the payment process
-  void _startPaymentProcess(String phoneNumber, String userId) async {
-    try {
-      // Proceed to payment
-      final paymentResponse = await _paymentService.initiatePayment(phoneNumber, _totalPayment); // Call payment service to initiate payment
-      if (paymentResponse['ResponseCode'] == '0') { // If payment initiated successfully
-        // Payment initiated successfully
-        ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-          const SnackBar(content: Text('Payment initiated successfully!')), // Inform user of successful payment initiation
-        );
-
-        // Poll for payment confirmation
-        await _pollForPaymentConfirmation(phoneNumber, userId); // Poll for payment confirmation asynchronously
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-          SnackBar(content: Text('Payment initiation failed: ${paymentResponse['errorMessage']}')), // Display error message from payment initiation
-        );
-      }
-    } catch (error) {
+// Function to start the payment process
+void _startPaymentProcess(String phoneNumber, String userId) async {
+  try {
+    // Proceed to payment
+    final paymentResponse = await _paymentService.initiatePayment(phoneNumber, _totalPayment); // Call payment service to initiate payment
+    if (paymentResponse['ResponseCode'] == '0') { // If payment initiated successfully
+      // Payment initiated successfully
       ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-        SnackBar(content: Text('Error: $error')), // Display generic error message
-      );
-    }
-  }
-
-  // Function to poll for payment confirmation
-  Future<void> _pollForPaymentConfirmation(String phoneNumber, String userId) async {
-    bool paymentConfirmed = false; // Flag to track if payment is confirmed
-    int attempts = 0; // Counter for attempts to check payment status
-    const maxAttempts = 3; // Maximum number of attempts
-    const pollInterval = Duration(seconds: 5); // Interval between each attempt
-
-    while (!paymentConfirmed && attempts < maxAttempts) { // While payment is not confirmed and within maximum attempts
-      try {
-        final paymentStatus = await _paymentService.checkPaymentStatus(phoneNumber); // Check payment status
-        if (paymentStatus == 'paid') { // If payment is confirmed
-          // Payment confirmed
-          paymentConfirmed = true; // Update flag
-          ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-            const SnackBar(content: Text('Payment confirmed!')), // Inform user of payment confirmation
-          );
-
-          // Proceed to book the room
-          await _bookRoom(userId); // Call function to book the room
-        }
-      } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-          SnackBar(content: Text('Error while checking payment status: $error')), // Display error while checking payment status
-        );
-      }
-
-      // Increment attempts
-      attempts++;
-
-      // Wait before polling again
-      await Future.delayed(pollInterval); // Delay before next attempt
-    }
-
-    if (!paymentConfirmed) { // If payment is not confirmed after attempts
-      ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-        const SnackBar(content: Text('Payment confirmation failed. Please contact support.')), // Inform user of payment confirmation failure
-      );
-    }
-  }
-
-  // Function to book the room
-  Future<void> _bookRoom(String userId) async {
-    try {
-      await FirebaseFirestore.instance.collection('bookings').add({ // Add booking details to Firestore collection
-        'userId': userId, // User ID
-        'hotelId': widget.hotelId, // Hotel ID
-        'roomId': widget.roomId, // Room ID
-        'checkInDate': _checkInDate != null ? Timestamp.fromDate(_checkInDate!) : null, // Check-in date (if selected)
-        'checkOutDate': _checkOutDate != null ? Timestamp.fromDate(_checkOutDate!) : null, // Check-out date (if selected)
-        'phoneNumber': _phoneNumberController.text.trim(), // Phone number
-        'totalPayment': _totalPayment, // Total payment amount
-        'timestamp': FieldValue.serverTimestamp(), // Server timestamp
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-        const SnackBar(content: Text('Room booked successfully!')), // Inform user of successful room booking
+        const SnackBar(content: Text('Payment initiated successfully!')), // Inform user of successful payment initiation
       );
 
-      Navigator.pop(context); // Close the booking screen
-    } catch (error) {
+      // Proceed to book the room regardless of payment status
+      await _bookRoom(userId, false); // Pass payment status as false initially
+
+      // Poll for payment confirmation
+      await _pollForPaymentConfirmation(phoneNumber, userId); // Poll for payment confirmation asynchronously
+    } else {
       ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
-        SnackBar(content: Text('Error booking room: $error')), // Display error message while booking room
+        SnackBar(content: Text('Payment initiation failed: ${paymentResponse['errorMessage']}')), // Display error message from payment initiation
       );
+
+      // Proceed to book the room regardless of payment status
+      await _bookRoom(userId, false); // Pass payment status as false
     }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
+      SnackBar(content: Text('Error: $error')), // Display generic error message
+    );
+
+    // Proceed to book the room regardless of payment status
+    await _bookRoom(userId, false); // Pass payment status as false
   }
 }
 
+// Function to poll for payment confirmation
+Future<void> _pollForPaymentConfirmation(String phoneNumber, String userId) async {
+  bool paymentConfirmed = false; // Flag to track if payment is confirmed
+  int attempts = 0; // Counter for attempts to check payment status
+  const maxAttempts = 3; // Maximum number of attempts
+  const pollInterval = Duration(seconds: 5); // Interval between each attempt
+
+  while (!paymentConfirmed && attempts < maxAttempts) { // While payment is not confirmed and within maximum attempts
+    try {
+      final paymentStatus = await _paymentService.checkPaymentStatus(phoneNumber); // Check payment status
+      if (paymentStatus == 'paid') { // If payment is confirmed
+        // Payment confirmed
+        paymentConfirmed = true; // Update flag
+        ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
+          const SnackBar(content: Text('Payment confirmed!')), // Inform user of payment confirmation
+        );
+
+        // Update booking payment status
+        await _updateBookingPaymentStatus(userId, true); // Pass payment status as true
+        return; // Exit function after updating booking payment status
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
+        SnackBar(content: Text('Error while checking payment status: $error')), // Display error while checking payment status
+      );
+    }
+
+    // Increment attempts
+    attempts++;
+
+    // Wait before polling again
+    await Future.delayed(pollInterval); // Delay before next attempt
+  }
+
+  if (!paymentConfirmed) { // If payment is not confirmed after attempts
+    ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
+      const SnackBar(content: Text('Payment confirmation failed. Please contact support.')), // Inform user of payment confirmation failure
+    );
+
+    // Update booking payment status to false
+    await _updateBookingPaymentStatus(userId, false); // Pass payment status as false
+  }
+}
+
+// Function to book the room
+Future<void> _bookRoom(String userId, bool paymentStatus) async {
+  try {
+    // Add booking details to Firestore collection
+    await FirebaseFirestore.instance.collection('bookings').add({
+      'userId': userId, // User ID
+      'hotelId': widget.hotelId, // Hotel ID
+      'roomId': widget.roomId, // Room ID
+      'checkInDate': _checkInDate != null ? Timestamp.fromDate(_checkInDate!) : null, // Check-in date (if selected)
+      'checkOutDate': _checkOutDate != null ? Timestamp.fromDate(_checkOutDate!) : null, // Check-out date (if selected)
+      'phoneNumber': _phoneNumberController.text.trim(), // Phone number
+      'totalPayment': _totalPayment, // Total payment amount
+      'timestamp': FieldValue.serverTimestamp(), // Server timestamp
+      'paymentStatus': paymentStatus, // Payment status (true if confirmed, false otherwise)
+    });
+
+    // Update room availability status
+    await FirebaseFirestore.instance
+      .collection('hotels')
+      .doc(widget.hotelId)
+      .collection('rooms')
+      .doc(widget.roomId)
+      .update({
+        'isAvailable': false, // Update room availability status
+      });
+
+    ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
+      const SnackBar(content: Text('Room booked successfully!')), // Inform user of successful room booking
+    );
+
+    Navigator.pop(context); // Close the booking screen
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
+      SnackBar(content: Text('Error booking room: $error')), // Display error message while booking room
+    );
+  }
+}
+
+// Function to update booking payment status
+Future<void> _updateBookingPaymentStatus(String userId, bool paymentStatus) async {
+  try {
+    // Update the payment status of the booking in Firestore
+    await FirebaseFirestore.instance.collection('bookings')
+      .where('userId', isEqualTo: userId)
+      .where('hotelId', isEqualTo: widget.hotelId)
+      .where('roomId', isEqualTo: widget.roomId)
+      .limit(1)
+      .get()
+      .then((querySnapshot) {
+        querySnapshot.docs.first.reference.update({
+          'paymentStatus': paymentStatus, // Update payment status
+        });
+      });
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar( // Show snackbar message
+      SnackBar(content: Text('Error updating payment status: $error')), // Display error message while updating payment status
+    );
+  }
+}
+}
 
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';

@@ -32,14 +32,18 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
       appBar: AppBar(
         title: const Text('Add Hotel'),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Name'),
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                ),
                 controller: nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -50,7 +54,10 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
               ),
               const SizedBox(height: 20.0),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Location'),
+                decoration: InputDecoration(
+                  labelText: 'Location',
+                  border: OutlineInputBorder(),
+                ),
                 controller: locationController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -60,21 +67,29 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                 },
               ),
               const SizedBox(height: 20.0),
-              Slider(
-                value: rating,
-                min: 0.0,
-                max: 5.0,
-                divisions: 5,
-                label: 'Rating: $rating',
-                onChanged: (newRating) {
-                  setState(() {
-                    rating = newRating;
-                  });
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Rating: $rating'),
+                  Slider(
+                    value: rating,
+                    min: 0.0,
+                    max: 5.0,
+                    divisions: 5,
+                    onChanged: (newRating) {
+                      setState(() {
+                        rating = newRating;
+                      });
+                    },
+                  ),
+                ],
               ),
               const SizedBox(height: 20.0),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Image URL'),
+                decoration: InputDecoration(
+                  labelText: 'Image URL',
+                  border: OutlineInputBorder(),
+                ),
                 controller: imageUrlController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -105,6 +120,7 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
                     // Notify provider
                     Provider.of<HotelProvider>(context, listen: false).addHotel(hotel);
 
+                    // Navigate back to previous screen
                     Navigator.pop(context);
                   }
                 },

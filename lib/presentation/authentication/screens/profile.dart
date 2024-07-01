@@ -1,10 +1,12 @@
 import 'dart:io';
 
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application_2/presentation/authentication/screens/login.dart'; // Import the login page
+import 'package:flutter_application_2/screens/view_bookings.dart'; // Import the view bookings page
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -123,6 +125,13 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  void _openViewBookingsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ViewBookingsPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,6 +182,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   backgroundColor: Colors.teal,
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   textStyle: TextStyle(fontSize: 16),
+                ),
+              ),
+              SizedBox(height: 16),
+              GestureDetector(
+                onTap: _openViewBookingsPage,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.book),
+                    SizedBox(width: 8),
+                    Text(
+                      'View Bookings',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
                 ),
               ),
             ],
