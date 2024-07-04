@@ -1,6 +1,4 @@
-# HOTEL_MANAGEMENT & BOOKING
-
-## HOTEL BOOKING AND MANAGEMENT APPLICATION
+# HOTEL_MANAGEMENT & BOOKING APLICATION
 
 The Hotel Management Application is a comprehensive app for managing hotel bookings, room inventory, and user interactions. This application is designed to facilitate seamless hotel operations, providing both users and hotel administrators with an intuitive platform for booking and managing rooms.
 
