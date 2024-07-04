@@ -24,6 +24,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     );
   }
 
+  // Function to fetch rooms from Firestore
   Future<List<Room>> fetchRooms() async {
     final roomsCollection = FirebaseFirestore.instance
         .collection('hotels')
@@ -31,12 +32,14 @@ class _RoomsScreenState extends State<RoomsScreen> {
         .collection('rooms');
     final roomsSnapshot = await roomsCollection.get();
 
+    // Map Firestore documents to Room objects
     return roomsSnapshot.docs.map((roomDoc) {
       final roomData = roomDoc.data() as Map<String, dynamic>;
       return Room.fromMap(roomData, roomDoc.id);
     }).toList();
   }
 
+  // Widget to build the list of rooms
   Widget buildRoomList() {
     return FutureBuilder<List<Room>>(
       future: fetchRooms(),
@@ -56,9 +59,11 @@ class _RoomsScreenState extends State<RoomsScreen> {
           itemBuilder: (context, index) {
             final room = rooms[index];
             return ListTile(
-              leading: room.imageUrl.isNotEmpty ? Image.network(room.imageUrl, width: 50, height: 50, fit: BoxFit.cover) : null,
+              leading: room.imageUrl.isNotEmpty
+                  ? Image.network(room.imageUrl, width: 50, height: 50, fit: BoxFit.cover)
+                  : null,
               title: Text(room.type),
-              subtitle: Text('Price: \$${room.price}'),
+              subtitle: Text('Price: Ksh ${room.price}'),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -86,6 +91,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     );
   }
 
+  // Show dialog to edit room details
   Future<void> _showEditRoomDialog(Room room) async {
     final TextEditingController priceController = TextEditingController(text: room.price.toString());
     bool isAvailable = room.isAvailable;
@@ -134,6 +140,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     );
   }
 
+  // Update room details in Firestore
   Future<void> _updateRoom(Room room, double newPrice, bool newAvailability) async {
     try {
       final roomRef = FirebaseFirestore.instance
@@ -177,6 +184,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     }
   }
 
+  // Show confirmation dialog for deleting a room
   Future<void> _showDeleteConfirmationDialog(Room room) async {
     return showDialog(
       context: context,
@@ -204,6 +212,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
     );
   }
 
+  // Delete room from Firestore
   Future<void> _deleteRoom(Room room) async {
     try {
       final roomRef = FirebaseFirestore.instance

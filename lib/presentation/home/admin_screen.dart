@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/presentation/authentication/screens/admin_profile.dart';
 import 'package:flutter_application_2/presentation/authentication/screens/users_list_page.dart';
+// Import ViewPaymentsPage
+
 import '../../screens/add_hotel_screen.dart';
 import '../../screens/add_room.dart';
 import '../../screens/view_hotel.dart';
 import '../../screens/admin_view_bookings.dart'; 
+import '../../screens/view_payments.dart'; 
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -108,14 +111,26 @@ class _AdminDashboardState extends State<AdminDashboard> {
             );
           },
         ),
-        ListTile( // New list tile for View Bookings
-          leading: Icon(Icons.book), // Icon for View Bookings
-          title: Text('View Bookings'), // Title text for View Bookings
+        ListTile(
+          leading: Icon(Icons.book),
+          title: Text('View Bookings'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ViewBookingsPage(), // Navigate to ViewBookingsPage
+                builder: (context) => ViewBookingsPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.payment),
+          title: Text('View Payments'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ViewPaymentsPage(),
               ),
             );
           },
@@ -123,4 +138,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
       ],
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: AdminDashboard(),
+  ));
 }

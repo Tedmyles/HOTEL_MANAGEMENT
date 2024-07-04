@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart'; // Import Flutter material design widgets
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore database
 import 'package:intl/intl.dart'; // Import for date formatting
 
 class ViewBookingsPage extends StatefulWidget {
@@ -10,7 +10,7 @@ class ViewBookingsPage extends StatefulWidget {
 }
 
 class _ViewBookingsPageState extends State<ViewBookingsPage> {
-  late Stream<QuerySnapshot> _bookingsStream;
+  late Stream<QuerySnapshot> _bookingsStream; // Stream to hold Firestore query results
 
   @override
   void initState() {
@@ -23,18 +23,21 @@ class _ViewBookingsPageState extends State<ViewBookingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Bookings'),
+        title: Text('View Bookings'), // App bar title
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _bookingsStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show loading indicator while data is being fetched
             return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
+            // Show error message if there's an error with the stream
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            // Show message if there are no bookings available
             return Center(child: Text('No bookings available.'));
           }
 
@@ -73,16 +76,18 @@ class _ViewBookingsPageState extends State<ViewBookingsPage> {
 }
 
 class BookingDetailsPage extends StatelessWidget {
-  final DocumentSnapshot booking;
+  final DocumentSnapshot booking; // Snapshot of the booking document from Firestore
 
   const BookingDetailsPage({Key? key, required this.booking}) : super(key: key);
 
+  // Format Firestore timestamp to readable date format
   String _formatTimestamp(Timestamp timestamp) {
     return DateFormat('MMM d, yyyy, hh:mm a').format(timestamp.toDate());
   }
 
   @override
   Widget build(BuildContext context) {
+    // Extract booking details from Firestore document snapshot
     var phoneNumber = booking['phoneNumber'];
     var userId = booking['userId'];
     var hotelId = booking['hotelId'];
@@ -95,27 +100,27 @@ class BookingDetailsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Booking Details'),
+        title: Text('Booking Details'), // App bar title
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDetailRow('Phone Number', phoneNumber),
-            _buildDetailRow('User ID', userId),
-            _buildDetailRow('Hotel ID', hotelId),
-            _buildDetailRow('Room ID', roomId),
-            _buildDetailRow('Check-In Date', _formatTimestamp(checkInDate)),
-            _buildDetailRow('Check-Out Date', _formatTimestamp(checkOutDate)),
-            _buildDetailRow('Total Payment', 'Ksh $totalPayment'),
-            _buildDetailRow('Payment Status', paymentStatus ? 'Paid' : 'Pending'),
-            _buildDetailRow('Timestamp', _formatTimestamp(timestamp)),
+            _buildDetailRow('Phone Number', phoneNumber), // Display phone number
+            _buildDetailRow('User ID', userId), // Display user ID
+            _buildDetailRow('Hotel ID', hotelId), // Display hotel ID
+            _buildDetailRow('Room ID', roomId), // Display room ID
+            _buildDetailRow('Check-In Date', _formatTimestamp(checkInDate)), // Format and display check-in date
+            _buildDetailRow('Check-Out Date', _formatTimestamp(checkOutDate)), // Format and display check-out date
+            _buildDetailRow('Total Payment', 'Ksh $totalPayment'), // Display total payment with currency
+            _buildDetailRow('Payment Status', paymentStatus ? 'Paid' : 'Pending'), // Display payment status
+            _buildDetailRow('Timestamp', _formatTimestamp(timestamp)), // Format and display timestamp
             if (!paymentStatus)
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: ElevatedButton.icon(
-                  onPressed: () => _showPaymentDialog(context),
+                  onPressed: () => _showPaymentDialog(context, phoneNumber, totalPayment), // Trigger payment status update dialog
                   icon: Icon(Icons.payment),
                   label: Text('Update Payment Status'),
                   style: ElevatedButton.styleFrom(
@@ -131,6 +136,7 @@ class BookingDetailsPage extends StatelessWidget {
     );
   }
 
+  // Helper method to build a row with label and value
   Widget _buildDetailRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -140,7 +146,7 @@ class BookingDetailsPage extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Text(
-              '$label:',
+              '$label:', // Label text
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -150,7 +156,7 @@ class BookingDetailsPage extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Text(
-              value,
+              value, // Value text
               softWrap: true,
             ),
           ),
@@ -159,27 +165,28 @@ class BookingDetailsPage extends StatelessWidget {
     );
   }
 
-  void _showPaymentDialog(BuildContext context) {
+  // Method to show a dialog for updating payment status
+  void _showPaymentDialog(BuildContext context, String phoneNumber, num totalPayment) {
     TextEditingController _mpesaCodeController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter MPesa Confirmation Code'),
+          title: Text('Enter MPesa Confirmation Code'), // Dialog title
           content: TextField(
             controller: _mpesaCodeController,
             decoration: InputDecoration(hintText: 'MPesa Confirmation Code'),
           ),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: Text('Cancel'), // Cancel button
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Confirm'),
+              child: Text('Confirm'), // Confirm button
               onPressed: () async {
                 String mpesaCode = _mpesaCodeController.text.trim();
 
@@ -193,13 +200,21 @@ class BookingDetailsPage extends StatelessWidget {
                     'mpesaCode': mpesaCode, // Optional: Store the MPesa code if needed
                   });
 
+                  // Add payment details to the 'payments' collection
+                  await FirebaseFirestore.instance.collection('payments').add({
+                    'mpesaCode': mpesaCode,
+                    'phoneNumber': phoneNumber,
+                    'amount': totalPayment,
+                    'timestamp': Timestamp.now(),
+                  });
+
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Payment status updated to Paid')),
+                    SnackBar(content: Text('Payment status updated to Paid')), // Show confirmation snack bar
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Please enter the MPesa confirmation code')),
+                    SnackBar(content: Text('Please enter the MPesa confirmation code')), // Show error snack bar if no code entered
                   );
                 }
               },

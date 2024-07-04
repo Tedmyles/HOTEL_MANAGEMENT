@@ -50,7 +50,7 @@ class HotelDetailsScreen extends StatelessWidget {
                         ),
                         ListTile(
                           title: Text(room.type),
-                          subtitle: Text('Price: Ksh${room.price.toStringAsFixed(2)}'),
+                          subtitle: Text('Price: Ksh${room.price.toStringAsFixed(2)} per night'),
                           onTap: () {
                             Navigator.push(
                               context,

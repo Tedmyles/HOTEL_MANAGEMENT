@@ -12,14 +12,20 @@ class AddHotelScreen extends StatefulWidget {
 }
 
 class _AddHotelScreenState extends State<AddHotelScreen> {
+  // GlobalKey to manage the form state
   final _formKey = GlobalKey<FormState>();
+
+  // Controllers for text fields
+  final hotelIdController = TextEditingController();
   final nameController = TextEditingController();
   final locationController = TextEditingController();
   final imageUrlController = TextEditingController();
-  double rating = 0.0;
+  double rating = 0.0; // Default rating value
 
   @override
   void dispose() {
+    // Clean up controllers when the widget is disposed
+    hotelIdController.dispose();
     nameController.dispose();
     locationController.dispose();
     imageUrlController.dispose();
@@ -35,98 +41,121 @@ class _AddHotelScreenState extends State<AddHotelScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(),
-                ),
-                controller: nameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Location',
-                  border: OutlineInputBorder(),
-                ),
-                controller: locationController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a location';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Rating: $rating'),
-                  Slider(
-                    value: rating,
-                    min: 0.0,
-                    max: 5.0,
-                    divisions: 5,
-                    onChanged: (newRating) {
-                      setState(() {
-                        rating = newRating;
-                      });
-                    },
+          key: _formKey, // Associate the GlobalKey with the Form widget
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Text field for Hotel ID
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Hotel ID',
+                    border: OutlineInputBorder(),
                   ),
-                ],
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Image URL',
-                  border: OutlineInputBorder(),
+                  controller: hotelIdController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a hotel ID';
+                    }
+                    return null;
+                  },
                 ),
-                controller: imageUrlController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an image URL';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    // Generate a new document ID for the hotel
-                    final hotelCollection = FirebaseFirestore.instance.collection('hotels');
-                    final newHotelDoc = hotelCollection.doc();
+                const SizedBox(height: 20.0),
+                // Text field for Hotel Name
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    border: OutlineInputBorder(),
+                  ),
+                  controller: nameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20.0),
+                // Text field for Hotel Location
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Location',
+                    border: OutlineInputBorder(),
+                  ),
+                  controller: locationController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a location';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20.0),
+                // Slider for Hotel Rating
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Rating: $rating'),
+                    Slider(
+                      value: rating,
+                      min: 0.0,
+                      max: 5.0,
+                      divisions: 5,
+                      onChanged: (newRating) {
+                        setState(() {
+                          rating = newRating;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20.0),
+                // Text field for Image URL
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Image URL',
+                    border: OutlineInputBorder(),
+                  ),
+                  controller: imageUrlController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter an image URL';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20.0),
+                // Submit button
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      // If form is valid, proceed to save the hotel data
+                      final hotelId = hotelIdController.text.trim();
+                      final hotelDoc = FirebaseFirestore.instance.collection('hotels').doc(hotelId);
 
-                    Hotel hotel = Hotel(
-                      id: newHotelDoc.id,
-                      name: nameController.text,
-                      location: locationController.text,
-                      imageUrl: imageUrlController.text,
-                      rating: rating,
-                    );
+                      // Create a Hotel object from input data
+                      Hotel hotel = Hotel(
+                        id: hotelId,
+                        name: nameController.text.trim(),
+                        location: locationController.text.trim(),
+                        imageUrl: imageUrlController.text.trim(),
+                        rating: rating,
+                      );
 
-                    // Add the new hotel to Firestore
-                    await newHotelDoc.set(hotel.toJson());
+                      // Save the hotel data to Firestore
+                      await hotelDoc.set(hotel.toJson());
 
-                    // Notify provider
-                    Provider.of<HotelProvider>(context, listen: false).addHotel(hotel);
+                      // Update local state using Provider 
+                      Provider.of<HotelProvider>(context, listen: false).addHotel(hotel);
 
-                    // Navigate back to previous screen
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('Submit'),
-              ),
-            ],
+                      // Navigate back to previous screen
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Submit'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

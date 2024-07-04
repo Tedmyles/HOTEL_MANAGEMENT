@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_2/domain/models/hotel.dart';
+import 'package:flutter_application_2/domain/models/hotel2.dart';
 import 'package:flutter_application_2/screens/room_details.dart';
 import 'package:flutter_application_2/screens/manage_rooms.dart';
 
@@ -16,7 +16,7 @@ class _ViewHotelsScreenState extends State<ViewHotelsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Hotels'),
+        title: const Text('View Hotels'),
       ),
       body: buildHotelList(),
     );

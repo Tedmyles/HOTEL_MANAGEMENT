@@ -494,10 +494,10 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-06-18T09:26:33.925363Z",
+  "generated": "2024-07-03T10:37:04.681911Z",
   "generator": "pub",
-  "generatorVersion": "3.4.1",
+  "generatorVersion": "3.4.3",
   "flutterRoot": "file:///D:/flutter/flutter",
-  "flutterVersion": "3.22.1",
+  "flutterVersion": "3.22.2",
   "pubCache": "file:///C:/Users/user/AppData/Local/Pub/Cache"
 }

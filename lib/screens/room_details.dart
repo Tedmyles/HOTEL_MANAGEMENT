@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_2/domain/models/room.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_2/screens/booking_screen.dart'; // Import the BookingScreen
 
 class RoomDetailsScreen extends StatelessWidget {
@@ -52,6 +51,7 @@ class RoomDetailsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            // Display room image if available, otherwise show a placeholder
                             room.imageUrl.isNotEmpty
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(16.0),
@@ -62,14 +62,18 @@ class RoomDetailsScreen extends StatelessWidget {
                                   )
                                 : const Placeholder(),
                             const SizedBox(height: 16.0),
+                            // Display room type
                             Text(
                               'Room Type: ${room.type}',
                               style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 8.0),
+                            // Display room price
                             Text('Price: Ksh${room.price.toStringAsFixed(2)}'),
                             const SizedBox(height: 8.0),
+                            // Display room availability
                             Text('Availability: ${room.isAvailable ? 'Available' : 'Not Available'}'),
+                            // Show "Book Now" button if the room is available
                             if (room.isAvailable)
                               ElevatedButton(
                                 onPressed: () {

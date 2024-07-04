@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  // Method to send a password reset email
   Future<void> _sendPasswordResetEmail(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
@@ -46,12 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false, // Hide the back button in the app bar
       ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/bg2.jpg'),
+            image: AssetImage('assets/images/bg2.jpg'), // Background image
             fit: BoxFit.cover,
           ),
         ),
@@ -59,67 +60,67 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const LogoWidget(),
+              const LogoWidget(), // Custom logo widget
               TextFormField(
                 controller: _emailController,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white), // Text color
                 decoration: const InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.white),
-                  prefixIcon: Icon(Icons.email, color: Colors.white),
+                  labelText: 'Email', // Label text
+                  labelStyle: TextStyle(color: Colors.white), // Label text color
+                  prefixIcon: Icon(Icons.email, color: Colors.white), // Email icon
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 16), // Vertical spacing
               TextFormField(
                 controller: _passwordController,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white), // Text color
                 decoration: const InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.white),
-                  prefixIcon: Icon(Icons.lock, color: Colors.white),
+                  labelText: 'Password', // Label text
+                  labelStyle: TextStyle(color: Colors.white), // Label text color
+                  prefixIcon: Icon(Icons.lock, color: Colors.white), // Lock icon
                 ),
-                obscureText: true,
+                obscureText: true, // Hide password characters
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20), // Vertical spacing
               ElevatedButton(
                 onPressed: () async {
-                  String email = _emailController.text.trim();
-                  String password = _passwordController.text.trim();
-                  await context.read<custom.AuthProvider>().signInWithEmailAndPassword(context, email, password);
+                  String email = _emailController.text.trim(); // Get trimmed email
+                  String password = _passwordController.text.trim(); // Get trimmed password
+                  await context.read<custom.AuthProvider>().signInWithEmailAndPassword(context, email, password); // Call signInWithEmailAndPassword from AuthProvider
                   if (context.read<custom.AuthProvider>().user != null) {
-                    Navigator.pushReplacementNamed(context, '/home');
+                    Navigator.pushReplacementNamed(context, '/home'); // Navigate to home screen if user is authenticated
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 33, 243, 37),
+                  backgroundColor: const Color.fromARGB(255, 33, 243, 37), // Button background color
                 ),
-                child: const Text('Login'),
+                child: const Text('Login'), // Button text
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 20), // Vertical spacing
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/adminLogin');
+                  Navigator.pushNamed(context, '/adminLogin'); // Navigate to admin login screen
                 },
-                child: const Text('Login as Admin', style: TextStyle(color: Colors.white)),
+                child: const Text('Login as Admin', style: TextStyle(color: Colors.white)), // Admin login text
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signUp');
+                  Navigator.pushNamed(context, '/signUp'); // Navigate to sign up screen
                 },
-                child: const Text("Don't have an account? Signup", style: TextStyle(color: Colors.white)),
+                child: const Text("Don't have an account? Signup", style: TextStyle(color: Colors.white)), // Signup text
               ),
               TextButton(
                 onPressed: () async {
-                  String email = _emailController.text.trim();
+                  String email = _emailController.text.trim(); // Get trimmed email
                   if (email.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please enter your email address.')),
+                      SnackBar(content: Text('Please enter your email address.')), // Show snackbar if email is empty
                     );
                   } else {
-                    await _sendPasswordResetEmail(email);
+                    await _sendPasswordResetEmail(email); // Call _sendPasswordResetEmail method
                   }
                 },
-                child: const Text('Forgot Password?', style: TextStyle(color: Colors.purple)),
+                child: const Text('Forgot Password?', style: TextStyle(color: Colors.purple)), // Forgot password text
               ),
             ],
           ),
