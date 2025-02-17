@@ -18,6 +18,8 @@ The Hotel Management Application is a comprehensive app for managing hotel booki
 3. **User Profile:**
    - **View Profile:** Users can view their profile information.
    - **Edit Profile:** Users can update their profile information including password and profile photo.
+4. **M-Pesa Integration:**
+     The app has m-pesa integration to enable seamless and secure payment.
 
 #### Admin Features:
 
